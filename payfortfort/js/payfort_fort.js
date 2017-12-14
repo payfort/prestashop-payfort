@@ -150,13 +150,14 @@ var payfortFortMerchantPage2 = (function () {
 var payfortFortMerchantPage = (function () {
     var merchantPageFormId = '#frm_payfort_fort_payment';
     return {
-        loadMerchantPage: function(url) {
+        loadMerchantPage: function(url, paymentMethod) {
+            paymentMethod = (typeof paymentMethod !== 'undefined') ?  paymentMethod : null;
             $.ajax({
                 type: 'GET',
                 async: true,
                 url: url,
                 headers: { "cache-control": "no-cache" },
-                data: {fc: 'module', module: 'payfortfort', controller: 'payment', action: 'getMerchantPageData'},//'fc=module&module=payfortfort&controller=payment&action=getMerchantPageData',
+                data: {fc: 'module', module: 'payfortfort', controller: 'payment', action: 'getMerchantPageData', paymentMethod: paymentMethod},//'fc=module&module=payfortfort&controller=payment&action=getMerchantPageData',
                 cache: false,
                 success: function(data)
                 {
@@ -192,7 +193,7 @@ var payfortFortMerchantPage = (function () {
             if($("#payfort_merchant_page").size()) {
                 $( "#payfort_merchant_page" ).remove();
             }
-            $('<iframe name="payfort_merchant_page" id="payfort_merchant_page"height="550px" frameborder="0" scrolling="no" onload="payfortFortMerchantPage.iframeLoaded(this)" style="display:none"></iframe>').appendTo('#pf_iframe_content');
+            $('<iframe name="payfort_merchant_page" id="payfort_merchant_page"height="650px" frameborder="0" scrolling="no" onload="payfortFortMerchantPage.iframeLoaded(this)" style="display:none"></iframe>').appendTo('#pf_iframe_content');
             $('.pf-iframe-spin').show();
             $('.pf-iframe-close').hide();
             $( "#payfort_merchant_page" ).attr("src", gatewayUrl);

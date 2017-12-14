@@ -124,6 +124,45 @@
                 </select>
             </div>
         </fieldset>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+            <fieldset>
+            <legend>{l s='Installments' mod='payfortfort'}</legend>
+            <label for="payfort_installments"> {l s='Enabled' mod='payfortfort'}</label>
+            <div class="margin-form" id="payfort_installments">
+                <input type="radio" name="payfort_installments" value="1" style="vertical-align: middle;" {if $PAYFORT_FORT_INSTALLMENTS} checked="checked"{/if} />
+                <span>{l s='Yes' mod='payfortfort'}</span><br/>
+                <input type="radio" name="payfort_installments" value="0" style="vertical-align: middle;" {if !$PAYFORT_FORT_INSTALLMENTS} checked="checked"{/if} />
+                <span>{l s='No' mod='payfortfort'}</span><br/>
+            </div>
+            <label for="payfort_fort_integration_type_installments">{l s='Integration Type' mod='payfortfort'}</label>
+            <div class="margin-form">
+                <select id="payfort_fort_integration_type_installments" name="payfort_fort_integration_type_installments">';
+                    <option value="redirection" {if 'redirection' eq $PAYFORT_FORT_INTEGRATION_TYPE_INSTALLMENTS} selected {/if}>
+                        {l s='Redirection' mod='payfortfort'}
+                    </option>
+                    <option value="merchantPage" {if 'merchantPage' eq $PAYFORT_FORT_INTEGRATION_TYPE_INSTALLMENTS} selected {/if}>
+                        {l s='Merchant Page' mod='payfortfort'}
+                    </option>
+                </select>
+            </div>
+        </fieldset>        
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
         <fieldset>
             <legend>{l s='Sadad' mod='payfortfort'}</legend>
             <label for="payfort_sadad"> {l s='Enabled' mod='payfortfort'}</label>
@@ -153,7 +192,7 @@
 <script>
     jQuery(document).ready(function () {
         jQuery('[name=submitModule]').click(function () {
-            if (jQuery('[name=payfort_naps]:checked').val() == '0' && jQuery('[name=payfort_sadad]:checked').val() == '0' && jQuery('[name=payfort_credit_card]:checked').val() == '0') {
+            if (jQuery('[name=payfort_naps]:checked').val() == '0' && jQuery('[name=payfort_sadad]:checked').val() == '0' && jQuery('[name=payfort_credit_card]:checked').val() == '0' && jQuery('[name=payfort_installments]:checked').val() == '0') {
                 alert('Please enable at least 1 payment method!');
                 return false;
             }

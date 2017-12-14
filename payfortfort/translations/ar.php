@@ -46,6 +46,7 @@ $_MODULE['<{payfortfort}prestashop>configuration_1fe52a3f4bf15801b0b3693bcb41259
 $_MODULE['<{payfortfort}prestashop>configuration_1b6498e23a3c43775699129e7ebfcfeb'] = 'Redirection';
 $_MODULE['<{payfortfort}prestashop>configuration_3a7ef4472327026e38c97c37c5ebe302'] = 'Merchant Page';
 $_MODULE['<{payfortfort}prestashop>configuration_9f12da343b8703d5d0d86028f7ac3c42'] = 'Merchant Page 2.0';
+$_MODULE['<{payfortfort}prestashop>configuration_ba5376b5ba3216a7a51eabb18265d921'] = 'Installments';
 $_MODULE['<{payfortfort}prestashop>configuration_71f0975490a28c1fb70cd769369e3425'] = 'Sadad';
 $_MODULE['<{payfortfort}prestashop>configuration_6292f7b782ebc38da23246336fd64e60'] = 'Naps';
 $_MODULE['<{payfortfort}prestashop>configuration_b17f3f4dcf653a5776792498a9b44d6a'] = 'Update settings';
@@ -66,6 +67,8 @@ $_MODULE['<{payfortfort}prestashop>payfortfort_cd44fa808f9916afbe0860e4a20edc7a'
 $_MODULE['<{payfortfort}prestashop>payfortfort_74fb0fc2d53fe5c619b0b57e7e6fd034'] = 'رمز التحقق';
 $_MODULE['<{payfortfort}prestashop>payfortfort_8b23d7189f3a4440396eea5ebcd510e0'] = 'رمز التحقق موجود خلف البطاقة';
 $_MODULE['<{payfortfort}prestashop>payfortfort_52bab1c3ac8aff9159be10acf1d5e55e'] = 'موافق';
+$_MODULE['<{payfortfort}prestashop>payfortfort_f56edd64c1ffb81f9be7014cd5ec71df'] = 'الدفع بالتقسيط';
+$_MODULE['<{payfortfort}prestashop>payfortfort_91798f420fe5f808b53348970a600278'] = 'الدفع بالتقسيط';
 $_MODULE['<{payfortfort}prestashop>payfortfort_0b458cd81b6de8da1bd575a9dd607782'] = 'الدفع بواسطة سداد';
 $_MODULE['<{payfortfort}prestashop>payfortfort_166ed4659f575a51079d939d12eaf48a'] = 'الدفع بواسطة سداد';
 $_MODULE['<{payfortfort}prestashop>payfortfort_dff7224b141b1b24b299340814bfcc79'] = 'الدفع بواسطة نابس';
