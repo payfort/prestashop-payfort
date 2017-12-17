@@ -11,6 +11,7 @@ class PayfortfortPaymentModuleFrontController extends ModuleFrontController
     private $pfHelper;
     private $pfConfig;
     private $pfPayment;
+    private $pfOrder;    
 
     public function __construct()
     {
@@ -18,6 +19,7 @@ class PayfortfortPaymentModuleFrontController extends ModuleFrontController
         $this->pfConfig  = Payfort_Fort_Config::getInstance();
         $this->pfHelper  = Payfort_Fort_Helper::getInstance();
         $this->pfPayment = Payfort_Fort_Payment::getInstance();
+        $this->pfOrder   = new Payfort_Fort_Order();
         if(session_id() == '') {
             session_start();
         }
@@ -103,8 +105,12 @@ class PayfortfortPaymentModuleFrontController extends ModuleFrontController
     {
         $paymentMethod   = PAYFORT_FORT_PAYMENT_METHOD_CC;
         $integrationType = PAYFORT_FORT_INTEGRATION_TYPE_REDIRECTION;
+        $isInstallments  = isset($_POST['INSTALLMENTS']) && $_POST['INSTALLMENTS'] == '1' ? true : false;
         $isSADAD         = isset($_POST['SADAD']) && $_POST['SADAD'] == '1' ? true : false;
         $isNaps          = isset($_POST['NAPS']) && $_POST['NAPS'] == '1' ? true : false;
+        if ($isInstallments) {
+            $paymentMethod = PAYFORT_FORT_PAYMENT_METHOD_INSTALLMENTS;
+        }
         if ($isSADAD) {
             $paymentMethod = PAYFORT_FORT_PAYMENT_METHOD_SADAD;
         }
@@ -135,6 +141,13 @@ class PayfortfortPaymentModuleFrontController extends ModuleFrontController
 
     private function _getMerchantPageData()
     {
+        $fortParams = array_merge($_GET, $_POST);
+        if(!empty($fortParams['paymentMethod']) && $fortParams['paymentMethod'] == PAYFORT_FORT_PAYMENT_METHOD_INSTALLMENTS){
+            $integrationType = $this->pfConfig->getInstallmentsIntegrationType();
+            $paymentMethod   = PAYFORT_FORT_PAYMENT_METHOD_INSTALLMENTS;
+            $result          = $this->_getPaymentFormData($paymentMethod, $integrationType);
+            return $result;
+        }
         $integrationType = $this->pfConfig->getCcIntegrationType();
         $paymentMethod   = PAYFORT_FORT_PAYMENT_METHOD_CC;
         $result          = $this->_getPaymentFormData($paymentMethod, $integrationType);
@@ -153,7 +166,11 @@ class PayfortfortPaymentModuleFrontController extends ModuleFrontController
 
     public function merchantPageResponse()
     {
-        $this->_handleResponse('online', $this->pfConfig->getCcIntegrationType());
+        $fortParams = array_merge($_GET, $_POST);
+        if (!empty($fortParams['installments']) && $fortParams['installments'] == 'STANDALONE')
+            $this->_handleResponse('online', $this->pfConfig->getInstallmentsIntegrationType ());
+        else
+            $this->_handleResponse('online', $this->pfConfig->getCcIntegrationType());
     }
 
     private function _handleResponse($response_mode = 'online', $integration_type = PAYFORT_FORT_INTEGRATION_TYPE_REDIRECTION)

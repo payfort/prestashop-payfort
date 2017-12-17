@@ -207,6 +207,13 @@ class PayfortFORT extends PaymentModule
             else {
                 Configuration::updateValue('PAYFORT_FORT_SANDBOX_MODE', 0);
             }
+            $payfort_installments = (int) Tools::getvalue('payfort_installments');
+            if ($payfort_installments == 1) {
+                Configuration::updateValue('PAYFORT_FORT_INSTALLMENTS', 1);
+            }
+            else {
+                Configuration::updateValue('PAYFORT_FORT_INSTALLMENTS', 0);
+            }
             $payfort_sadad = (int) Tools::getvalue('payfort_sadad');
             if ($payfort_sadad == 1) {
                 Configuration::updateValue('PAYFORT_FORT_SADAD', 1);
@@ -234,6 +241,14 @@ class PayfortFORT extends PaymentModule
             }
             else {
                 Configuration::updateValue('PAYFORT_FORT_INTEGRATION_TYPE', $payfort_integration_type);
+            }
+            
+            $payfort_integration_type_installments = Tools::getvalue('payfort_integration_type_installments');
+            if (empty($payfort_integration_type_installments)) {
+                Configuration::updateValue('PAYFORT_FORT_INTEGRATION_TYPE_INSTALLMENTS', 'redirection');
+            }
+            else {
+                Configuration::updateValue('PAYFORT_FORT_INTEGRATION_TYPE_INSTALLMENTS', $payfort_integration_type_INSTALLMENTS);
             }
 
 
@@ -293,21 +308,22 @@ class PayfortFORT extends PaymentModule
         // For "Hold for Review" order status
         $order_states = OrderState::getOrderStates((int) $this->context->cookie->id_lang);
         $this->context->smarty->assign(array(
-            'available_currencies'          => $this->fort_available_currencies,
-            'module_dir'                    => $this->_path,
-            'order_states'                  => $order_states,
-            'PAYFORT_FORT_SANDBOX_MODE'     => Configuration::get('PAYFORT_FORT_SANDBOX_MODE'),
-            'PAYFORT_FORT_SADAD'            => Configuration::get('PAYFORT_FORT_SADAD'),
-            'PAYFORT_FORT_NAPS'             => Configuration::get('PAYFORT_FORT_NAPS'),
-            'PAYFORT_FORT_CREDIT_CARD'      => Configuration::get('PAYFORT_FORT_CREDIT_CARD'),
-            'PAYFORT_FORT_INTEGRATION_TYPE' => Configuration::get('PAYFORT_FORT_INTEGRATION_TYPE'),
-            'PAYFORT_FORT_HOLD_REVIEW_OS'   => (int) Configuration::get('PAYFORT_FORT_HOLD_REVIEW_OS'),
-            'PAYFORT_FORT_COMMAND'          => Configuration::get('PAYFORT_FORT_COMMAND'),
-            'PAYFORT_FORT_LANGUAGE'         => Configuration::get('PAYFORT_FORT_LANGUAGE'),
-            'PAYFORT_FORT_SHA_ALGORITHM'    => Configuration::get('PAYFORT_FORT_SHA_ALGORITHM'),
-//            'PAYFORT_FORT_ORDER_PLACEMENT' => Configuration::get('PAYFORT_FORT_ORDER_PLACEMENT'),
-            'PAYFORT_FORT_GATEWAY_CURRENCY' => Configuration::get('PAYFORT_FORT_GATEWAY_CURRENCY'),
-            'PAYFORT_FORT_DEBUG_MODE'       => Configuration::get('PAYFORT_FORT_DEBUG_MODE'),
+            'available_currencies'                           => $this->fort_available_currencies,
+            'module_dir'                                     => $this->_path,
+            'order_states'                                   => $order_states,
+            'PAYFORT_FORT_SANDBOX_MODE'                      => Configuration::get('PAYFORT_FORT_SANDBOX_MODE'),
+            'PAYFORT_FORT_INSTALLMENTS'                      => Configuration::get('PAYFORT_FORT_INSTALLMENTS'),
+            'PAYFORT_FORT_INTEGRATION_TYPE_INSTALLMENTS'     => Configuration::get('PAYFORT_FORT_INTEGRATION_TYPE_INSTALLMENTS'),
+            'PAYFORT_FORT_SADAD'                             => Configuration::get('PAYFORT_FORT_SADAD'),
+            'PAYFORT_FORT_NAPS'                              => Configuration::get('PAYFORT_FORT_NAPS'),
+            'PAYFORT_FORT_CREDIT_CARD'                       => Configuration::get('PAYFORT_FORT_CREDIT_CARD'),
+            'PAYFORT_FORT_INTEGRATION_TYPE'                  => Configuration::get('PAYFORT_FORT_INTEGRATION_TYPE'),
+            'PAYFORT_FORT_HOLD_REVIEW_OS'                    => (int) Configuration::get('PAYFORT_FORT_HOLD_REVIEW_OS'),
+            'PAYFORT_FORT_COMMAND'                           => Configuration::get('PAYFORT_FORT_COMMAND'),
+            'PAYFORT_FORT_LANGUAGE'                          => Configuration::get('PAYFORT_FORT_LANGUAGE'),
+            'PAYFORT_FORT_SHA_ALGORITHM'                     => Configuration::get('PAYFORT_FORT_SHA_ALGORITHM'),
+            'PAYFORT_FORT_GATEWAY_CURRENCY'                  => Configuration::get('PAYFORT_FORT_GATEWAY_CURRENCY'),
+            'PAYFORT_FORT_DEBUG_MODE'                        => Configuration::get('PAYFORT_FORT_DEBUG_MODE'),
         ));
 
         $configuration_merchant_identifier = 'PAYFORT_FORT_MERCHANT_IDENTIFIER';
@@ -331,10 +347,12 @@ class PayfortFORT extends PaymentModule
         $isFailed = Tools::getValue('payfortforterror');
 
         $url              = $this->_getUrl('fc=module&module=payfortfort&controller=payment&action=postPaymentForm');
+        $installments     = Configuration::get('PAYFORT_FORT_INSTALLMENTS');
         $SADAD            = Configuration::get('PAYFORT_FORT_SADAD');
         $NAPS             = Configuration::get('PAYFORT_FORT_NAPS');
         $credit_card      = Configuration::get('PAYFORT_FORT_CREDIT_CARD');
         $integration_type = Configuration::get('PAYFORT_FORT_INTEGRATION_TYPE');
+        $integration_type_installments = Configuration::get('PAYFORT_FORT_INTEGRATION_TYPE_INSTALLMENTS');
 
         $pfHelper = Payfort_Fort_Helper::getInstance();
 
@@ -352,7 +370,9 @@ class PayfortFORT extends PaymentModule
         $this->context->smarty->assign('SADAD', $SADAD);
         $this->context->smarty->assign('NAPS', $NAPS);
         $this->context->smarty->assign('credit_card', $credit_card);
+        $this->context->smarty->assign('installments', $installments);
         $this->context->smarty->assign('integration_type', $integration_type);
+        $this->context->smarty->assign('integration_type_installments', $integration_type_installments);
         $this->context->smarty->assign('payfort_path', $this->getPathUri());
         
         $arr_js_messages = 

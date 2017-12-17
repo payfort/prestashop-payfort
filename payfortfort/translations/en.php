@@ -66,6 +66,8 @@ $_MODULE['<{payfortfort}prestashop>payfortfort_cd44fa808f9916afbe0860e4a20edc7a'
 $_MODULE['<{payfortfort}prestashop>payfortfort_74fb0fc2d53fe5c619b0b57e7e6fd034'] = 'CVC Code';
 $_MODULE['<{payfortfort}prestashop>payfortfort_8b23d7189f3a4440396eea5ebcd510e0'] = 'You can find the code on the back of the card.';
 $_MODULE['<{payfortfort}prestashop>payfortfort_52bab1c3ac8aff9159be10acf1d5e55e'] = 'Confirm my order';
+$_MODULE['<{payfortfort}prestashop>payfortfort_f56edd64c1ffb81f9be7014cd5ec71df'] = 'pay with Installments';
+$_MODULE['<{payfortfort}prestashop>payfortfort_91798f420fe5f808b53348970a600278'] = 'pay with Installments';
 $_MODULE['<{payfortfort}prestashop>payfortfort_0b458cd81b6de8da1bd575a9dd607782'] = 'Pay with SADAD';
 $_MODULE['<{payfortfort}prestashop>payfortfort_166ed4659f575a51079d939d12eaf48a'] = 'Pay With SADAD';
 $_MODULE['<{payfortfort}prestashop>payfortfort_dff7224b141b1b24b299340814bfcc79'] = 'Pay with NAPS';
