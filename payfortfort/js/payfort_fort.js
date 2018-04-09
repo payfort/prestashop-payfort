@@ -1,3 +1,4 @@
+var baseDir = window.location.origin + '/';
 var payfortFort = (function () {
    return {
         validateCreditCard: function(element) {
