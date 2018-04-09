@@ -80,8 +80,13 @@
                     </div>
                 </div>
                 <script type="text/javascript"><!--
-                    var arr_messages = [];
-                    {$arr_js_messages}
+                    var arr_messages = {
+                        'error_invalid_card_number' : 'error_invalid_card_number',
+                        'error_invalid_card_holder_name' : 'error_invalid_card_holder_name',
+                        'error_invalid_expiry_date' : 'error_invalid_expiry_date',
+                        'error_invalid_cvc_code' : 'error_invalid_cvc_code',
+                        'error_invalid_cc_details' : 'error_invalid_cc_details',
+                    };
                  //--></script>   
             {else}
                 <div class="row">
