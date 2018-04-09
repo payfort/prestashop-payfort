@@ -1,5 +1,5 @@
 function submitMerchantPage(url, paymentMethod) {
-    payfortFortMerchantPage.loadMerchantPage(baseDir + 'index.php', paymentMethod);
+    payfortFortMerchantPage.loadMerchantPage(window.location.origin + '/index.php', paymentMethod);
 }
 
 function showMerchantPage2Form() {
