@@ -44,7 +44,7 @@
                                         </div>
                                         <div class="required form-group">
                                             <label class="required" for="payfort_fort_card_number"> {l s='text_card_number' mod='payfortfort'} </label>
-                                            <input id="payfort_fort_card_number" class="form-control" type="text" autocomplete="off" value="" maxlength="16">
+                                            <input id="payfort_fort_card_number" class="form-control" type="text" autocomplete="off" value="" maxlength="19">
                                         </div>
                                         <div class="required select form-group">
                                             <label class="required" for="payfort_fort_expiry_month"> {l s='text_expiry_date' mod='payfortfort'} </label>
