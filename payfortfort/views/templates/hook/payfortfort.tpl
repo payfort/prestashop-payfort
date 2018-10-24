@@ -169,6 +169,3 @@
             </form>
         </div>
         {/if}
-    </div>
-</div>
-</form>
