@@ -123,6 +123,13 @@
                     </option>
                 </select>
             </div>
+            <label for="payfort_mada_branding"> {l s='mada Option:' mod='payfortfort'}</label>
+            <div class="margin-form" id="payfortfort_mada_branding">
+                <input type="radio" name="payfort_mada_branding" value="1" style="vertical-align: middle;" {if $PAYFORT_FORT_MADA_BRANDING}checked="checked"{/if} />
+                <span>{l s='Enabled' mod='payfortfort'}</span><br/>
+                <input type="radio" name="payfort_mada_branding" value="0" style="vertical-align: middle;" {if !$PAYFORT_FORT_MADA_BRANDING}checked="checked"{/if} />
+                <span>{l s='Disabled' mod='payfortfort'}</span><br/>
+            </div>         
         </fieldset>
                     
                     

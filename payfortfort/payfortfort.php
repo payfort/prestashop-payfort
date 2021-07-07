@@ -125,6 +125,7 @@ class PayfortFORT extends PaymentModule
                 $this->registerHook('header') &&
                 $this->registerHook('backOfficeHeader') &&
                 Configuration::updateValue('PAYFORT_FORT_SANDBOX_MODE', 1) &&
+                Configuration::updateValue('PAYFORT_FORT_MADA_BRANDING', 1) &&                
                 Configuration::updateValue('PAYFORT_FORT_LANGUAGE', 'en') &&
                 Configuration::updateValue('PAYFORT_FORT_COMMAND', 'AUTHORIZATION') &&
                 Configuration::updateValue('PAYFORT_HASH_ALGORITHM', 'SHA1') &&
@@ -139,6 +140,7 @@ class PayfortFORT extends PaymentModule
     public function uninstall()
     {
         Configuration::deleteByName('PAYFORT_FORT_SANDBOX_MODE');
+        Configuration::deleteByName('PAYFORT_FORT_MADA_BRANDING');        
         Configuration::deleteByName('PAYFORT_FORT_LANGUAGE');
         Configuration::deleteByName('PAYFORT_FORT_MERCHANT_IDENTIFIER');
         Configuration::deleteByName('PAYFORT_FORT_ACCESS_CODE');
@@ -206,6 +208,13 @@ class PayfortFORT extends PaymentModule
             }
             else {
                 Configuration::updateValue('PAYFORT_FORT_SANDBOX_MODE', 0);
+            }
+            $payfort_mada_branding = (int) Tools::getvalue('payfort_mada_branding');
+            if ($payfort_mada_branding == 1) {
+                Configuration::updateValue('PAYFORT_FORT_MADA_BRANDING', 1);
+            }
+            else {
+                Configuration::updateValue('PAYFORT_FORT_MADA_BRANDING', 0);
             }
             $payfort_installments = (int) Tools::getvalue('payfort_installments');
             if ($payfort_installments == 1) {
@@ -312,6 +321,7 @@ class PayfortFORT extends PaymentModule
             'module_dir'                                     => $this->_path,
             'order_states'                                   => $order_states,
             'PAYFORT_FORT_SANDBOX_MODE'                      => Configuration::get('PAYFORT_FORT_SANDBOX_MODE'),
+            'PAYFORT_FORT_MADA_BRANDING'                     => Configuration::get('PAYFORT_FORT_MADA_BRANDING'),
             'PAYFORT_FORT_INSTALLMENTS'                      => Configuration::get('PAYFORT_FORT_INSTALLMENTS'),
             'PAYFORT_FORT_INTEGRATION_TYPE_INSTALLMENTS'     => Configuration::get('PAYFORT_FORT_INTEGRATION_TYPE_INSTALLMENTS'),
             'PAYFORT_FORT_SADAD'                             => Configuration::get('PAYFORT_FORT_SADAD'),
@@ -347,6 +357,7 @@ class PayfortFORT extends PaymentModule
         $isFailed = Tools::getValue('payfortforterror');
 
         $url              = $this->_getUrl('fc=module&module=payfortfort&controller=payment&action=postPaymentForm');
+        $mada_branding    = Configuration::get('PAYFORT_FORT_MADA_BRANDING');
         $installments     = Configuration::get('PAYFORT_FORT_INSTALLMENTS');
         $SADAD            = Configuration::get('PAYFORT_FORT_SADAD');
         $NAPS             = Configuration::get('PAYFORT_FORT_NAPS');
@@ -365,6 +376,9 @@ class PayfortFORT extends PaymentModule
         if ($fortCurrency != 'QAR') {
             $NAPS = 0;
         }
+        if ($fortCurrency != 'SAR') {
+            $mada_branding = 0;
+        }
 
         $this->context->smarty->assign('url', $url);
         $this->context->smarty->assign('SADAD', $SADAD);
@@ -372,6 +386,7 @@ class PayfortFORT extends PaymentModule
         $this->context->smarty->assign('credit_card', $credit_card);
         $this->context->smarty->assign('installments', $installments);
         $this->context->smarty->assign('integration_type', $integration_type);
+        $this->smarty->assign('mada_branding', $mada_branding);        
         $this->context->smarty->assign('integration_type_installments', $integration_type_installments);
         $this->context->smarty->assign('payfort_path', $this->getPathUri());
         

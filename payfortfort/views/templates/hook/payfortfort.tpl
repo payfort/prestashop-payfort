@@ -31,13 +31,27 @@
                     <div class="col-xs-12 col-md-6">
                         <div class="payfortfort">
                             <p class="payment_module">
+                                {if $mada_branding eq 0}
                                 <a class="bankwire payfortfort-payment-tab" onclick="showMerchantPage2Form()" title="{l s='Pay With Debit / Cradit Card' mod='payfortfort'}" style="display: block;text-decoration: none; cursor:pointer; font-weight: bold;background:url({$payfort_path}/img/cc.png) 15px 15px no-repeat #fbfbfb;clear:both">
                                     {l s='Pay With Debit / Cradit Card' mod='payfortfort'}
                                 </a>
+                                {/if}
+                                {if $mada_branding eq 1}
+                                <a class="bankwire payfortfort-payment-tab" onclick="showMerchantPage2Form()" title="{l s='Pay With Credit / mada bank Card' mod='payfortfort'}" style="display: block;text-decoration: none; cursor:pointer; font-weight: bold;background:url({$payfort_path}/img/cc.png) 15px 15px no-repeat #fbfbfb;clear:both">
+                                    {l s='Pay With Credit / mada bank Card' mod='payfortfort'}
+                                </a>
+                                {/if}
                             </p>
                             <div id="payfortfort_form" style="display: none;">
                                 <form id="frm_payfortfort_merchantpage2" class="std box mini-payment" name="frm_payfortfort_merchantpage2" method="post" action="#" style="">
                                     <div class="payment_form">
+                                        <div>
+                                            {if $mada_branding eq 1}
+                                            <img src="{$moduleDir|addslashes}payfortfort/img/mada.jpeg" alt="mada" height="26" width="45"/>	
+                                            {/if}
+                                            <img src="{$moduleDir|addslashes}payfortfort/img/visa.png" alt="mada" height="26" width="45" style="margin:0px 5px"/>
+                                            <img src="{$moduleDir|addslashes}payfortfort/img/mastercard.jpeg" alt="mada" height="26" width="45"/>   
+                                        </div>
                                         <div class="required form-group">
                                             <label class="" for="payfort_fort_card_holder_name"> {l s='text_card_holder_name' mod='payfortfort'} </label>
                                             <input id="payfort_fort_card_holder_name" class="form-control" type="text" autocomplete="off" value="" maxlength="50">

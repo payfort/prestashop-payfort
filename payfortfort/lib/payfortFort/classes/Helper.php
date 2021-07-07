@@ -11,6 +11,7 @@ class Payfort_Fort_Helper extends Payfort_Fort_Super
     {
         parent::__construct();
         $this->pfConfig = Payfort_Fort_Config::getInstance();
+        $this->context->smarty->assign('moduleDir', _MODULE_DIR_);
     }
 
     /**
