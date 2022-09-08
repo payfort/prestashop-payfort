@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+	<name>amazonpaymentservices</name>
+	<displayName><![CDATA[Amazon Payment Services]]></displayName>
+	<version><![CDATA[2.0.0]]></version>
+	<description><![CDATA[Amazon Payment Services payment module offers seamless payments for PrestaShop platform merchants. If you don&rsquo;t have an APS account sign up here https://paymentservices.amazon.com/ for Amazon Payment Services account. We know that payment processing is critical to your business. With this module we aim to increase your payment processing capabilities. Do you have a business-critical questions? View our quick reference documentation https://paymentservices.amazon.com/docs/EN/index.html for key insights covering payment acceptance, integration, and reporting.	=]]></description>
+	<author><![CDATA[Amazon Payment Services]]></author>
+	<tab><![CDATA[payments_gateways]]></tab>
+	<confirmUninstall><![CDATA[Are you sure you want to uninstall Amazon Payment Services module?]]></confirmUninstall>
+	<is_configurable>1</is_configurable>
+	<need_instance>1</need_instance>
+	<limited_countries></limited_countries>
+</module>

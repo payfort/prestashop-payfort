@@ -1,0 +1,549 @@
+/**
+* 2007-2021 PrestaShop
+*
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Academic Free License (AFL 3.0)
+* that is bundled with this package in the file LICENSE.txt.
+* It is also available through the world-wide-web at this URL:
+* http://opensource.org/licenses/afl-3.0.php
+* If you did not receive a copy of the license and are unable to
+* obtain it through the world-wide-web, please send an email
+* to license@prestashop.com so we can send you a copy immediately.
+*
+* DISCLAIMER
+*
+* Do not edit or add to this file if you wish to upgrade PrestaShop to newer
+* versions in the future. If you wish to customize PrestaShop for your
+* needs please refer to http://www.prestashop.com for more information.
+*
+*  @author    PrestaShop SA <contact@prestashop.com>
+*  @copyright 2007-2021 PrestaShop SA
+*  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+*  International Registered Trademark & Property of PrestaShop SA
+*
+* Don't forget to prefix your containers with your own identifier
+* to avoid any conflicts with others containers.
+*/
+
+/* standard checkout css start*/
+
+div.aps16 {
+    display: block;
+    border: 1px
+    solid #d6d4d4;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    font-size: 17px;
+    line-height: 23px;
+    color: #333;
+    font-weight: bold;
+    padding: 10px 10px 10px 15px;
+    letter-spacing: -1px;
+    position: relative;
+}
+
+.aps16 .aps_saved_card_security_code{
+    opacity: 1 !important;
+    width: 100px !important;
+    height: auto !important;
+    border: 2px solid black;
+}
+
+.aps16 .aps_token_group span.aps-card-num,
+.aps16 .aps_token_group span.aps-card-expiry {
+    width: auto;
+    height: auto;
+    background: none;
+}
+.aps16 .token-box .aps_token_group{
+    display: block;
+    width: auto;
+    height: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.aps16 .aps_hosted_payment_form .card-row img.card-icon.active {
+    right: 30px;
+}
+
+body.lang_ar .aps16 .aps_hosted_payment_form .card-row img.card-icon.active {
+    left: 30px;
+    right: auto;
+}
+.aps16 .aps_hosted_payment_form .card-row .form-control {
+    max-width: 100% !important;
+    height: 35px;
+}
+
+body.lang_ar .aps16 #payment-confirmation,
+body.lang_ar .aps16 .button-align {
+    text-align: left;
+}
+
+.aps16 #payment-confirmation,
+.aps16 .button-align {
+    text-align: right;
+}
+
+.aps16 .plan_info a{
+    display: inline;
+    border: navajowhite;
+    padding: unset;
+    margin: unset;
+}
+}
+
+input.field-error {
+    border: 2px solid red !important;
+}
+.aps-iframe-background{
+    position: fixed;
+    z-index: 999;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 99999
+}
+.aps-iframe-container{
+    position: relative;
+    z-index: 99999999
+}
+iframe#amazonpaymentservices_aps_merchant_page,
+iframe#amazonpaymentservices_installments_aps_merchant_page{
+    width:80% !important;
+    min-height:600px !important;
+}
+.aps-close-container{
+    display:block;
+    text-align:center;
+    margin:1em auto;
+}
+.aps-iframe-close{
+    font-size: 1.7em;
+    color: #fff;
+    cursor: pointer
+}
+.aps-iframe-spin{
+    font-size: 3em;
+    color: #fff;
+    display: block;
+    margin: 1em auto;
+    cursor: default
+}
+/* standard checkout css end*/
+
+/* Hosted checkout css start*/
+.aps_hosted_payment_form,
+.aps_redirect_payment_form,
+.aps_standard_payment_form{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 40px;
+}
+body.lang-rtl .aps_hosted_payment_form,
+body.lang-rtl .aps_redirect_payment_form,
+body.lang-rtl .aps_standard_payment_form
+{
+    margin-left: 0px;
+    margin-right: 40px;
+}
+.aps_hosted_payment_form .radio,
+.aps_redirect_payment_form .radio,
+.aps_standard_payment_form .radio{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.aps-loader{
+    position: fixed;
+    z-index: 999;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 99999
+}
+
+.loader {
+    position: relative;
+    left: 50%;
+    top: 50%;
+    border: 0px;
+    width: 50px;
+    height: 50px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #3498db;
+    border-radius: 50%;
+    animation: spin 2s linear infinite;
+}
+.loader .fa {
+    font-size : 40px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Carousel CSS */
+.emi_carousel .emi_box {
+    text-align: center;
+    border: 1px solid #ccc;
+    margin: 0 5px;
+    border-radius: 3px;
+    padding: 10px 0;
+}
+.emi_carousel .emi_box p {
+    margin-bottom: 5px;
+}
+.emi_carousel .emi_box p.int_rate {
+    color: #43bad4;
+}
+.emi_carousel .emi-carousel-left-arr,.emi_carousel .emi-carousel-right-arr {
+    position: absolute;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    top: 0;
+    font-size:25px;
+    opacity: 0.7;
+}
+.emi_carousel .emi-carousel-left-arr {
+    left:0px;
+}
+.emi_carousel .emi-carousel-right-arr {
+    right:0px;
+}
+.emi_carousel .slick-list {
+    width:90%;
+    margin:auto;
+}
+.emi_carousel .slick-disabled {
+    opacity: 0.3;
+}
+.emi_box.selected {
+    border: 2px solid #78cee1;
+}
+.plan_info {
+    margin-top:5px;
+    padding: 10px;
+    border: 1px solid;
+}
+.plan_info:empty {
+    display: none;
+}
+.card-label .required,
+.aps_error{
+    color: #FF0000;
+}
+.aps_hosted_payment_form .card-row {
+    position: relative;
+}
+.aps_hosted_payment_form .card-row img.card-icon.active {
+    position: absolute !important;
+    top: 7px;
+    width: auto;
+    height: 20px;
+}
+body.lang-rtl .aps_hosted_payment_form .card-row img.card-icon.active {
+    left: 30px;
+}
+
+body.lang-en .aps_hosted_payment_form .card-row img.card-icon.active {
+    right: 30px;
+}
+.aps_hosted_payment_form .card-row img.card-icon:not(.active) {
+    display:none
+}
+
+plans:empty+label.aps_error {
+    display: none;
+}
+
+img.issuer-logo {
+    width: 100px;
+    height: 30px;
+    margin-right: 5px !important;
+}
+
+.slick-slider
+{
+    position: relative;
+
+    display: block;
+    box-sizing: border-box;
+
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+
+    -webkit-touch-callout: none;
+    -khtml-user-select: none;
+    -ms-touch-action: pan-y;
+        touch-action: pan-y;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.slick-list
+{
+    position: relative;
+    display: block;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+.slick-list:focus
+{
+    outline: none;
+}
+.slick-list.dragging
+{
+    cursor: pointer;
+    cursor: hand;
+}
+
+.slick-slider .slick-track,
+.slick-slider .slick-list
+{
+    -webkit-transform: translate3d(0, 0, 0);
+       -moz-transform: translate3d(0, 0, 0);
+        -ms-transform: translate3d(0, 0, 0);
+         -o-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+}
+
+.slick-track
+{
+    position: relative;
+    top: 0;
+    left: 0;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.slick-track:before,
+.slick-track:after
+{
+    display: table;
+    content: '';
+}
+.slick-track:after
+{
+    clear: both;
+}
+.slick-loading .slick-track
+{
+    visibility: hidden;
+}
+
+.slick-slide
+{
+    display: none;
+    float: left;
+    height: 100%;
+    min-height: 1px;
+}
+body.lang-rtl .slick-slide
+{
+    float: right;
+}
+.slick-slide img
+{
+    display: block;
+}
+.slick-slide.slick-loading img
+{
+    display: none;
+}
+.slick-slide.dragging img
+{
+    pointer-events: none;
+}
+.slick-initialized .slick-slide
+{
+    display: block;
+}
+.slick-loading .slick-slide
+{
+    visibility: hidden;
+}
+.slick-vertical .slick-slide
+{
+    display: block;
+    height: auto;
+    border: 1px solid transparent;
+}
+.slick-arrow.slick-hidden {
+    display: none;
+}
+/* Hosted checkout css end*/
+
+/* Embedded Hosted checkout css start*/
+.validation-off{
+    display: none;
+}
+/* Embedded Hosted checkout css end*/
+
+/*Valu css start*/
+.valu_form:not(.active) {
+    display: none;
+}
+div.valu_form {
+    overflow: hidden;
+}
+
+.tenure_carousel .tenureBox {
+    text-align: center;
+    border: 1px solid #ccc;
+    margin: 0 5px;
+    border-radius: 3px;
+    padding: 10px 0;
+}
+.tenure_carousel .tenureBox p {
+    margin-bottom: 5px;
+}
+.tenure_carousel .tenureBox p.int_rate {
+    color: #43bad4;
+}
+.tenure_carousel .tenure-carousel-left-arr,.tenure_carousel .tenure-carousel-right-arr {
+    position: absolute;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    top: 0;
+    font-size:25px;
+    opacity: 0.7;
+}
+.tenure_carousel .tenure-carousel-left-arr {
+    left:0px;
+}
+.tenure_carousel .tenure-carousel-right-arr {
+    right:0px;
+}
+.tenure_carousel .slick-list {
+    width:90%;
+    margin:auto;
+}
+.tenure_carousel .slick-disabled {
+    opacity: 0.3;
+}
+
+.tenureBox.selected {
+    border: 2px solid #78cee1;
+}
+
+.valu_form .input-text{
+    width: 100%;
+}
+.valu_form .input-text,
+.valu_form .valu_customer_verify {
+    line-height: 1.25 !important;
+    padding: .5rem 1rem !important;
+    height: 35px;
+}
+.valu_form .aps-btn {
+    width: 100%;
+    font-size: 13px;
+    display: flex;
+    font-weight: 400;
+    height: 35px;
+    line-height: inherit;
+    text-decoration: none;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+}
+.valu_form .aps-pad-none {
+    padding:0;
+}
+.valu_form span.country_code {
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #f5f5f5;
+    padding: 5px 10px;
+    background-color: #f5f5f5;
+    border-color: #c7c1c6;
+    border-top-color: #bbb3b9;
+}
+/*Valu css end*/
+
+/* Apple pay CSS */
+#applePay,
+#applePay_cart,
+#applePay_product,
+#applePay_product_psbc {
+    width: 150px !important;
+    height: 50px !important;
+    border: 0px !important;
+    border-radius: 5px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-top: 20px !important;
+    -webkit-appearance: -apple-pay-button;
+    background-position: 50% 50% !important;
+    background-color: black !important;
+    background-size: 60% !important;
+    background-repeat: no-repeat !important;
+    z-index: 999;
+}
+.apple-pay-buy {
+    -apple-pay-button-type: buy;
+}
+.apple-pay-donate {
+    -apple-pay-button-type: donate;
+}
+.apple-pay-plain {
+    -apple-pay-button-type: plain;
+}
+.apple-pay-set-up {
+    -apple-pay-button-type: set-up;
+}
+.apple-pay-book {
+    -apple-pay-button-type: book;
+}
+.apple-pay-check-out {
+    -apple-pay-button-type: check-out;
+}
+.apple-pay-subscribe {
+    -apple-pay-button-type: subscribe;
+}
+.apple-pay-add-money {
+    -apple-pay-button-type: add-money;
+}
+.apple-pay-contribute {
+    -apple-pay-button-type: contribute;
+}
+.apple-pay-order {
+    -apple-pay-button-type: order;
+}
+.apple-pay-reload {
+    -apple-pay-button-type: reload;
+}
+.apple-pay-rent {
+    -apple-pay-button-type: rent;
+}
+.apple-pay-support {
+    -apple-pay-button-type: support ;
+}
+.apple-pay-tip {
+    -apple-pay-button-type: tip;
+}
+.apple-pay-top-up {
+    -apple-pay-button-type: top-up;
+}
+.hide-me {
+    display: none !important;
+}
+/* Apple pay end here*/
