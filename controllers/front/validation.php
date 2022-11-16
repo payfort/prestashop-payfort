@@ -581,7 +581,7 @@ class AmazonpaymentservicesValidationModuleFrontController extends ModuleFrontCo
                 throw new \Exception('Apple pay url is invalid');
             }
             $parse_apple = parse_url($apple_url);
-            if (! isset($parse_apple['scheme']) || ! in_array($parse_apple['scheme'], array( 'http', 'https' ), true)) {
+            if (! isset($parse_apple['scheme']) || ! in_array($parse_apple['scheme'], array( 'https' ), true)) {
                 throw new \Exception('Apple pay url is invalid');
             }
             echo json_encode($this->aps_payment->validateApplePayUrl($apple_url));
