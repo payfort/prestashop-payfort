@@ -581,7 +581,7 @@ class AmazonpaymentservicesValidationModuleFrontController extends ModuleFrontCo
                 throw new \Exception('Apple pay url is invalid');
             }
             $parse_apple = parse_url($apple_url);
-            $matched_apple = preg_match('/^(?:[^.]+\.)*apple\.com.*$/', $parse_apple['host']);
+            $matched_apple = preg_match('/^(?:[^.]+\.)*apple\.com[^.]+$/', $apple_url);
             if (! isset($parse_apple['scheme']) || ! in_array($parse_apple['scheme'], array( 'https' ), true)  || ! $matched_apple) {
                 throw new \Exception('Apple pay url is invalid');
             }
