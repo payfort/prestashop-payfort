@@ -71,6 +71,8 @@ class ApsAdminConfig extends Module
         'knet_status' => 'AMAZONPAYMENTSERVICES_KNET_STATUS',
         'knet_sort_order' => 'AMAZONPAYMENTSERVICES_KNET_SORT_ORDER',
         'valu_status' => 'AMAZONPAYMENTSERVICES_VALU_STATUS',
+        'valu_allow_downpayment' => 'AMAZONPAYMENTSERVICES_VALU_ALLOW_DOWNPAYMENT',
+        'valu_downpayment_value' => 'AMAZONPAYMENTSERVICES_VALU_DOWNPAYMENT_VALUE',
         'valu_order_min_value' => 'AMAZONPAYMENTSERVICES_VALU_ORDER_MIN_VALUE',
         'valu_sort_order' => 'AMAZONPAYMENTSERVICES_VALU_SORT_ORDER',
         'apple_pay_status' => 'AMAZONPAYMENTSERVICES_APPLE_PAY_STATUS',
@@ -119,7 +121,7 @@ class ApsAdminConfig extends Module
                 $configValues[$key] = ApsConstant::MEEZA_BINS;
             }
 
-            if('host_to_host_url' == $key && empty($configValues[$key])){
+            if ('host_to_host_url' == $key && empty($configValues[$key])) {
                 $configValues[$key] = Context::getContext()->link->getModuleLink(
                     'amazonpaymentservices',
                     'validation',
@@ -128,7 +130,7 @@ class ApsAdminConfig extends Module
                     null
                 );
             }
-            if('check_status_cron_url' == $key && empty($configValues[$key])){
+            if ('check_status_cron_url' == $key && empty($configValues[$key])) {
                 $id_shop = '';
                 if (Shop::getContext() == Shop::CONTEXT_SHOP) {
                     $id_shop = '&id_shop='.(int) Context::getContext()->shop->id;
@@ -187,34 +189,34 @@ class ApsAdminConfig extends Module
             /*
                 upload certiticate
             */
-                if (!file_exists(_PS_UPLOAD_DIR_ . 'aps_certificate')) {
-                    // Apparently sometimes mkdir cannot set the rights, and sometimes chmod can't. Trying both.
-                    $success = @mkdir(_PS_UPLOAD_DIR_ . 'aps_certificate', 0775, true);
-                    $chmod = @chmod(_PS_UPLOAD_DIR_ . 'aps_certificate', 0775);
+            if (!file_exists(_PS_UPLOAD_DIR_ . 'aps_certificate')) {
+                // Apparently sometimes mkdir cannot set the rights, and sometimes chmod can't. Trying both.
+                $success = @mkdir(_PS_UPLOAD_DIR_ . 'aps_certificate', 0775, true);
+                $chmod = @chmod(_PS_UPLOAD_DIR_ . 'aps_certificate', 0775);
 
-                    // Create an index.php file in the new folder
-                    if (($success || $chmod)
-                        && !file_exists(_PS_UPLOAD_DIR_ . 'aps_certificate/' . 'index.php')
-                        && file_exists(_PS_UPLOAD_DIR_ . 'index.php')) {
-                        copy(_PS_UPLOAD_DIR_ . 'index.php', _PS_UPLOAD_DIR_ . 'aps_certificate/' . 'index.php');
-                    }
+                // Create an index.php file in the new folder
+                if (($success || $chmod)
+                    && !file_exists(_PS_UPLOAD_DIR_ . 'aps_certificate/' . 'index.php')
+                    && file_exists(_PS_UPLOAD_DIR_ . 'index.php')) {
+                    copy(_PS_UPLOAD_DIR_ . 'index.php', _PS_UPLOAD_DIR_ . 'aps_certificate/' . 'index.php');
                 }
+            }
 
-                if (isset($_FILES['apple_pay_certificate_crt_file'])) {
-                     if (is_uploaded_file($_FILES['apple_pay_certificate_crt_file']['tmp_name'])) {
-                        copy($_FILES['apple_pay_certificate_crt_file']['tmp_name'], _PS_UPLOAD_DIR_ . 'aps_certificate/identifier.crt.pem');
-                         @unlink($_FILES['apple_pay_certificate_crt_file']['tmp_name']);
-                         Configuration::updateValue('AMAZONPAYMENTSERVICES_APPLE_PAY_CRT_FILE', 'identifier.crt.pem');
-                     }
+            if (isset($_FILES['apple_pay_certificate_crt_file'])) {
+                if (is_uploaded_file($_FILES['apple_pay_certificate_crt_file']['tmp_name'])) {
+                    copy($_FILES['apple_pay_certificate_crt_file']['tmp_name'], _PS_UPLOAD_DIR_ . 'aps_certificate/identifier.crt.pem');
+                     @unlink($_FILES['apple_pay_certificate_crt_file']['tmp_name']);
+                     Configuration::updateValue('AMAZONPAYMENTSERVICES_APPLE_PAY_CRT_FILE', 'identifier.crt.pem');
                 }
+            }
 
-                if (isset($_FILES['apple_pay_certificate_key_file'])) {
-                     if (is_uploaded_file($_FILES['apple_pay_certificate_key_file']['tmp_name'])) {
-                        copy($_FILES['apple_pay_certificate_key_file']['tmp_name'], _PS_UPLOAD_DIR_ . 'aps_certificate/identifier.key.pem');
-                         @unlink($_FILES['apple_pay_certificate_key_file']['tmp_name']);
-                        Configuration::updateValue('AMAZONPAYMENTSERVICES_APPLE_PAY_KEY_FILE', 'identifier.key.pem');
-                     }
+            if (isset($_FILES['apple_pay_certificate_key_file'])) {
+                if (is_uploaded_file($_FILES['apple_pay_certificate_key_file']['tmp_name'])) {
+                    copy($_FILES['apple_pay_certificate_key_file']['tmp_name'], _PS_UPLOAD_DIR_ . 'aps_certificate/identifier.key.pem');
+                     @unlink($_FILES['apple_pay_certificate_key_file']['tmp_name']);
+                    Configuration::updateValue('AMAZONPAYMENTSERVICES_APPLE_PAY_KEY_FILE', 'identifier.key.pem');
                 }
+            }
 
             /**/
             $output = $this->displayConfirmation($this->l('Settings updated'));
@@ -868,6 +870,25 @@ class ApsAdminConfig extends Module
                             'id' => 'id',
                             'name' => 'name',
                         ),
+                    ),
+                    array(
+                        'type' => 'select',
+                        'label' => $this->l('Downpayment'),
+                        'name' => 'valu_allow_downpayment',
+                        'options' => array(
+                            'query' => array(
+                                array('id' => 1, 'name' => $this->l('Yes')),
+                                array('id' => 0, 'name' => $this->l('No'))
+                            ),
+                            'id' => 'id',
+                            'name' => 'name',
+                        ),
+                    ),
+                    array(
+                        'col'  => 6,
+                        'type' => 'text',
+                        'name' => 'valu_downpayment_value',
+                        'label' => $this->l('Downpayment value'),
                     ),
                     array(
                         'col'  => 6,

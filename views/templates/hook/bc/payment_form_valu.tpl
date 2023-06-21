@@ -37,19 +37,33 @@
 			<input type="hidden" name="aps_payment_method" id="aps_payment_method" value="{$payment_method|escape:'htmlall':'UTF-8'}">
 			<input type="hidden" name="aps_integration_type" id="aps_integration_type" value="{$integration_type|escape:'htmlall':'UTF-8'}">
 
-			<div id="request_otp_sec" class="valu_form active">
-			    <div class="aps-row">
-			        <div class="aps col-sm-1 aps-pad-none">
-			            <span class="country_code">{$country_code|escape:'htmlall':'UTF-8'}</span>
-			        </div>
-			        <div class="aps col-sm-7 aps-pad-none">
-			            <input type="text" value="" autocomplete="off" maxlength="19" placeholder="{l s='Enter your mobile number' mod='amazonpaymentservices'}" class="input-text aps_valu_mob_number onlynum" />
-			        </div>
-			        <div class="aps col-sm-4 aps-pad-none">
-			            <button type="button" class="valu_customer_verify btn btn-primary">{l s='Request OTP' mod='amazonpaymentservices'}</button>
-			        </div>
-			    </div>
+		<div id="request_otp_sec" class="valu_form active">
+		   {if $allow_downpayment }
+				<div class="valu-amount downpayment-field">
+					<label class="col-sm-12 aps-pad-none">{l s='Enter valU downpayment amount (Optional):' mod='amazonpaymentservices'}</label>
+					<input type="text" value="{$downpayment_value|escape:'htmlall':'UTF-8'}" autocomplete="off" maxlength="6" placeholder="Amount" value="0" class="input-text aps_valu_downpayment onlynum" />
+				</div>
+			{/if}
+			<div class="valu-amount wallet_amount-field">
+				<label class="col-sm-12 aps-pad-none">{l s='Enter valU wallet amount (Optional):' mod='amazonpaymentservices'}</label>
+				<input type="text" value="" autocomplete="off" maxlength="6" placeholder="Amount" value="0" class="input-text aps_valu_wallet_amount onlynum" />
 			</div>
+			<div class="valu-amount cashback-field">
+				<label class="col-sm-12 aps-pad-none">{l s='Enter valU cashback amount (Optional):' mod='amazonpaymentservices'}</label>
+				<input type="text" value="" autocomplete="off" maxlength="6" placeholder="Amount" value="0" class="input-text aps_valu_cashback onlynum" />
+			</div>
+			<div class="aps-row">
+				<div class="aps col-sm-1 aps-pad-none">
+					<span class="country_code">{$country_code|escape:'htmlall':'UTF-8'}</span>
+				</div>
+				<div class="aps col-sm-3 aps-pad-none">
+					<input type="text" value="" autocomplete="off" maxlength="19" placeholder="{l s='Enter your mobile number' mod='amazonpaymentservices'}" class="input-text aps_valu_mob_number onlynum" />
+				</div>
+				<div class="aps col-sm-4">
+					<button type="button" class="valu_customer_verify btn btn-primary">{l s='Request OTP' mod='amazonpaymentservices'}</button>
+				</div>
+			</div>
+		</div>
 
 			<div id="verfiy_otp_sec" class="valu_form">
 			    <div class="otp_generation_msg aps_success"></div>
@@ -57,30 +71,26 @@
 			        <div class="aps col-sm-9 aps-pad-none">
 			            <input type="password" class="form-control no-outline input-text aps_valu_otp" placeholder="{l s='Enter OTP' mod='amazonpaymentservices'}" onKeyPress="return keyLimit(this,10)" autocomplete="off"/>
 			        </div>
-			        <div class="buttons">
-			            <div class="pull-right">
-			                <button type="button" class="valu_otp_verify btn btn-primary">{l s='Verify OTP' mod='amazonpaymentservices'}</button>
-			            </div>
-			        </div>
 			    </div>
 			</div>
 
 			<div id="tenure_sec" class="valu_form">
-			    <input type="hidden" id="aps_active_tenure" name="active_tenure" />
-			    <input type="hidden" id="aps_tenure_amount" name="tenure_amount" />
-			    <input type="hidden" id="aps_tenure_interest" name="tenure_interest" />
-			    <div id="aps_valu_otp_field" class="form-row">
-			        <div class="install-line">{l s='OTP verified successfully, Please select your Installment plan!' mod='amazonpaymentservices'}</div>
-			        <div class="tenure">
-			        </div>
-			        <div class="termRow mt-1">
-			            <input type="checkbox" name="valu_terms" id="valu_terms" />
-			            <span class="js-terms">
-		                {l s='I agree with the valU' mod='amazonpaymentservices'} <a href="{$term_url|escape:'htmlall':'UTF-8'}">{l s='terms and condition' mod='amazonpaymentservices'}</a> {l s='to proceed with the transaction' mod='amazonpaymentservices'}
-		                </span>
+				<input type="hidden" id="aps_active_tenure" name="active_tenure" />
+				<input type="hidden" id="aps_tenure_amount" name="tenure_amount" />
+				<input type="hidden" id="aps_tenure_interest" name="tenure_interest" />
+				<input type="hidden" id="aps_otp" name="aps_otp" />
+				<div id="aps_valu_otp_field" class="form-row">
+					<div class="install-line">{l s='Please select your Installment plan!' mod='amazonpaymentservices'}</div>
+					<div class="tenure">
 					</div>
-			        <div class="tenure_term_error aps_error"></div>
-			    </div>
+					<div class="termRow mt-1">
+						<input type="checkbox" name="valu_terms" id="valu_terms" checked />
+						<span class="js-terms">
+						{l s='I agree with the valU' mod='amazonpaymentservices'} <a href="{$term_url|escape:'htmlall':'UTF-8'}">{l s='terms and condition' mod='amazonpaymentservices'}</a> {l s='to proceed with the transaction' mod='amazonpaymentservices'}
+						</span>
+					</div>
+					<div class="tenure_term_error aps_error"></div>
+				</div>
 			</div>
 
 			<label class="valu_process_error aps_error"></label>

@@ -233,7 +233,7 @@ var apsPayment = (function () {
             $( '#verfiy_otp_sec' ).slideDown().addClass( 'active' );
         },
         valuTenureBox: function( response ) {
-            $( '.valu_form.active' ).slideUp().removeClass( 'active' );
+            //$( '.valu_form.active' ).slideUp().removeClass( 'active' );
             $( '#tenure_sec' ).slideDown().addClass( 'active' );
             $( '#tenure_sec .tenure' ).html( response.tenure_html );
             $( '#tenure_sec .tenure .tenure_carousel' ).slick(
@@ -675,6 +675,13 @@ $( document.body ).on(
     '.valu_customer_verify',
     function(e) {
         var mobile_number = $( '.aps_valu_mob_number' ).val().trim();
+        var down_payment  = $( '.aps_valu_downpayment' ).val();
+        var wallet_amount = $( '.aps_valu_wallet_amount' ).val();
+        var cashback_amount = $( '.aps_valu_cashback' ).val();
+		down_payment = down_payment >= 0 ? down_payment : 0 ;
+        wallet_amount = wallet_amount >= 0 ? wallet_amount : 0 ;
+        cashback_amount = cashback_amount >= 0 ? cashback_amount : 0 ;
+
         $( ".valu_process_error" ).html( "" );
         if(mobile_number.length == 0){
             $( ".valu_process_error" ).html( APSValidation.translate('required_field') );
@@ -687,6 +694,9 @@ $( document.body ).on(
                     type:'POST',
                     data:{
                         mobile_number : mobile_number,
+                        down_payment : down_payment,
+                        wallet_amount : wallet_amount,
+                        cashback_amount : cashback_amount,
                         action   : 'valu_customer_verify'
                     },
                     beforeSend: function () {
@@ -697,6 +707,7 @@ $( document.body ).on(
                         if ( 'success' === response.status ) {
                             $( '.aps-loader' ).hide();
                             apsPayment.valuOtpVerifyBox( response );
+                            apsPayment.valuTenureBox( response );
                         } else if ('genotp_error' === response.status) {
                             $( '.aps-loader' ).hide();
                             $( '.valu_process_error' ).html( response.message );
@@ -755,6 +766,8 @@ $( document.body ).on(
         var tenure  = ele.attr( 'data-tenure' );
         var tenure_amount   = ele.attr( 'data-tenure-amount' );
         var tenure_interest = ele.attr( 'data-tenure-interest' );
+        var otp = $( '.aps_valu_otp').val();
+        $( '#aps_otp').val(otp);
         $( '#aps_active_tenure' ).val( tenure );
         $( '#aps_tenure_amount' ).val( tenure_amount );
         $( '#aps_tenure_interest' ).val( tenure_interest );

@@ -463,14 +463,25 @@ class AmazonpaymentservicesValidationModuleFrontController extends ModuleFrontCo
     {
         $response = [];
         $mobile_number = Tools::getValue('mobile_number');
+        $down_payment = Tools::getValue('down_payment');
+        $wallet_amount = Tools::getValue('wallet_amount');
+        $cashback_amount = Tools::getValue('cashback_amount');
+        $down_payment = $down_payment >= 0 ? $down_payment * 100 : 0 ;
+        $wallet_amount = $wallet_amount >= 0 ? $wallet_amount * 100 : 0 ;
+        $cashback_amount = $cashback_amount >= 0 ? $cashback_amount * 100 : 0 ;
+        $amount = (float)$this->context->cart->getOrderTotal(true, Cart::BOTH)* 100;
 
         if (empty($mobile_number)) {
             $response['error'] = true;
             $response['error_message'] = $this->module->l('Mobile number missing');
-        } else {
+        } else if($amount < ($down_payment + $wallet_amount + $cashback_amount) ) {
+            $this->aps_helper->log('Total Valu Payment : '. ($down_payment + $wallet_amount + $cashback_amount));
+            $response['error'] = true;
+            $response['message'] = $this->module->l('Cart amount cannot be less than the sum of downpayment, ToU amount and Cashback amount.');
+        }else {
             $response = $this->aps_payment->valuVerifyCustomer($mobile_number);
             if ('success'  == $response['status']) {
-                $response = $this->valuGenerateOtp($mobile_number, ApsConstant::APS_PAYMENT_METHOD_VALU);
+                $response = $this->valuGenerateOtp($mobile_number, ApsConstant::APS_PAYMENT_METHOD_VALU, $down_payment, $wallet_amount, $cashback_amount);
             }
         }
         //todo remove after testing
@@ -479,17 +490,17 @@ class AmazonpaymentservicesValidationModuleFrontController extends ModuleFrontCo
         exit;
     }
 
-    private function valuGenerateOtp($mobile_number, $payment_method)
+    private function valuGenerateOtp($mobile_number, $payment_method, $down_payment, $wallet_amount, $cashback_amount)
     {
         //validate & create order
         $this->validateRequestAndCreateOrder($payment_method);
 
         //get order id
         $id_order = $this->module->currentOrder;
-
+        
         Context::getContext()->cookie->__set('aps_valu_id_order', $id_order);
         $reference_id = Context::getContext()->cookie->__get('aps_valu_reference_id');
-        $response     = $this->aps_payment->valuOtpGenerate($mobile_number, $reference_id);
+        $response     = $this->aps_payment->valuOtpGenerate($mobile_number, $reference_id, $down_payment, $wallet_amount, $cashback_amount);
 
         if ('error'  == $response['status'] || 'genotp_error' == $response['status']) {
             $this->aps_payment->refillCart($id_order);
@@ -524,6 +535,8 @@ class AmazonpaymentservicesValidationModuleFrontController extends ModuleFrontCo
         $active_tenure   = Tools::getValue('active_tenure');
         $tenure_amount   = Tools::getValue('tenure_amount');
         $tenure_interest = Tools::getValue('tenure_interest');
+        $otp = Tools::getValue('aps_otp');
+
         if (empty($active_tenure)) {
             $success   = false;
             $error_msg = $this->module->l('Please select installment plan.');
@@ -531,12 +544,16 @@ class AmazonpaymentservicesValidationModuleFrontController extends ModuleFrontCo
             $reference_id   = Context::getContext()->cookie->__get('aps_valu_reference_id');
             $id_order       = Context::getContext()->cookie->__get('aps_valu_id_order');
             $mobile_number  = Context::getContext()->cookie->__get('aps_valu_mobile_number');
-            $otp            = Context::getContext()->cookie->__get('aps_valu_otp');
+            $down_payment = Context::getContext()->cookie->__get('aps_valu_downpayment');
+            $wallet_amount = Context::getContext()->cookie->__get('aps_valu_wallet_amount');
+            $cashback_amount = Context::getContext()->cookie->__get('aps_valu_cashback');
+
+            //$otp            = Context::getContext()->cookie->__get('aps_valu_otp');
             $transaction_id = Context::getContext()->cookie->__get('aps_valu_transaction_id');
             if (!empty($reference_id)) {
                 ApsOrder::saveApsPaymentMetaData($id_order, 'valu_reference_id', $reference_id);
             }
-            $response = $this->aps_payment->valuExecutePurchase($mobile_number, $reference_id, $otp, $transaction_id, $active_tenure, $id_order);
+            $response = $this->aps_payment->valuExecutePurchase($mobile_number, $reference_id, $otp, $transaction_id, $active_tenure, $id_order, $down_payment, $wallet_amount, $cashback_amount);
             if ('success'  == $response['status']) {
                 $objOrder = new Order($id_order);
                 $customer = new Customer($objOrder->id_customer);
@@ -551,6 +568,15 @@ class AmazonpaymentservicesValidationModuleFrontController extends ModuleFrontCo
                 }
                 if (!empty($tenure_interest)) {
                     ApsOrder::saveApsPaymentMetaData($id_order, 'tenure_interest', $tenure_interest);
+                }
+                if (!empty($down_payment)) {
+                    ApsOrder::saveApsPaymentMetaData($id_order, 'valu_downpayment', $down_payment);
+                }
+                if (!empty($wallet_amount)) {
+                    ApsOrder::saveApsPaymentMetaData($id_order, 'valu_wallet_amount', $wallet_amount);
+                }
+                if (!empty($cashback_amount)) {
+                    ApsOrder::saveApsPaymentMetaData($id_order, 'valu_cashback_amount', $wallet_amount);
                 }
             } else {
                 Context::getContext()->cookie->__set('aps_error_msg', $response['message']);

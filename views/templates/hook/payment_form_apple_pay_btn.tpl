@@ -22,6 +22,7 @@
 *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 *  International Registered Trademark & Property of PrestaShop SA
 *}
+
 <div id="aps_apple_pay_product_buy_btn">
 	<div id={$payment_method|escape:'htmlall':'UTF-8'|cat:"_"}{$btn_page|escape:'htmlall':'UTF-8'}>
 		<div class="buttons apple_pay_option hide-me">

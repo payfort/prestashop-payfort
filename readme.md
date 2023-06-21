@@ -37,6 +37,7 @@ Prestashop Plugin user guide is included in the repository [here](/Prestashop%20
 
 | Plugin Version | Release Notes |
 | :---: | :--- |
+| 2.1.0 |   * valU changes: downpayment, ToU and Cashback amounts are included in checkout page | 
 | 2.0.0 |   * Integrated payment options: MasterCard, Visa, AMEX, mada, Meeza, KNET, NAPS, Visa Checkout, ApplePay, valU <br/> * Tokenization is enabled for Debit/Credit Cards and Installments <br/> * ApplePay is activated in Product and Cart pages <br/> * Installments are embedded in Debit/Credit Card payment option <br/> * Partial/Full Refund, Single/Multiple Capture and Void events are manage in Prestashop order management screen | 
 
 

@@ -1,4 +1,5 @@
-{*
+<?php
+/**
 * 2007-2021 PrestaShop
 *
 * NOTICE OF LICENSE
@@ -21,20 +22,13 @@
 *  @copyright 2007-2021 PrestaShop SA
 *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 *  International Registered Trademark & Property of PrestaShop SA
-*}
+*/
+header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
 
-<section id="content-hook_order_confirmation" class="card">
-    <div class="card-block">
-        <div class="row">
-            <div class="col-md-12">
-                <p>
-                    <h3>{l s='An error occurred' mod='amazonpaymentservices'}:</h3>
-					<ul>
-						<li class="alert alert-danger">{$error|escape:'htmlall':'UTF-8'}</li>
-						<li>{$support_link_message|escape:'htmlall':'UTF-8'} <a href="{$link->getPageLink('contact', true)|escape:'html':'UTF-8'}">{l s='customer support' mod='amazonpaymentservices'}</a> </li>
-					</ul>
-                </p>
-            </div>
-        </div>
-    </div>
-</section>
+header('Cache-Control: no-store, no-cache, must-revalidate');
+header('Cache-Control: post-check=0, pre-check=0', false);
+header('Pragma: no-cache');
+
+header('Location: ../');
+exit;
