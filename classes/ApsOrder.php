@@ -207,24 +207,56 @@ class ApsOrder extends ObjectModel
             $active_tenure = ApsOrder::getApsMetaValue($id_order, 'active_tenure');
             $tenure_amount = ApsOrder::getApsMetaValue($id_order, 'tenure_amount');
             $tenure_interest = ApsOrder::getApsMetaValue($id_order, 'tenure_interest');
-            if (! empty($active_tenure)) {
+            $fees_amount = ApsOrder::getApsMetaValue($id_order, 'fees_amount');
+            $transaction_id= ApsOrder::getApsMetaValue($id_order, 'valu_transaction_id');
+            $loan_number= ApsOrder::getApsMetaValue($id_order, 'loan_number');
+            $cashback_amount= ApsOrder::getApsMetaValue($id_order, 'valu_cashback_amount') ?? 0;
+            $downpayment_amount= ApsOrder::getApsMetaValue($id_order, 'valu_downpayment') ?? 0;
+            $wallet_amount= ApsOrder::getApsMetaValue($id_order, 'valu_wallet_amount') ?? 0;
+            
+            if (! empty($transaction_id)) {
                 $display_data['display_data'][] = array(
-                    'label' => $objAps->l('Tenure'),
-                    'value' => $active_tenure
+                    'label' => $objAps->l('Transaction Id'),
+                    'value' => $transaction_id
                 );
             }
-            if (! empty($tenure_amount)) {
+            if (! empty($tenure_amount) && ! empty($active_tenure)) {
                 $display_data['display_data'][] = array(
-                    'label' => $objAps->l('Tenure Amount'),
-                    'value' => $tenure_amount . " " . $aps_payment_response['currency'] . "/" . $objAps->l('Month')
+                    'label' => $objAps->l('Installment Plans'),
+                    'value' => $tenure_amount . " " . $aps_payment_response['currency'] . "/" . $objAps->l('Month') . " for " . $active_tenure . " " . $objAps->l('Months')
                 );
             }
-            if (! empty($tenure_interest)) {
+            // if (! empty($fees_amount)) {
+            //     $display_data['display_data'][] = array(
+            //         'label' => $objAps->l('Admin Fees'),
+            //         'value' => number_format($fees_amount/100,2,'.','')
+            //     );
+            // }
+            if (! empty($wallet_amount)) {
                 $display_data['display_data'][] = array(
-                    'label' => $objAps->l('Tenure Interest'),
-                    'value' => $tenure_interest
+                    'label' => $objAps->l('Wallet Amount'),
+                    'value' => $wallet_amount . " " . $aps_payment_response['currency']
                 );
             }
+            if (! empty($cashback_amount)) {
+                $display_data['display_data'][] = array(
+                    'label' => $objAps->l('Cashback Amount'),
+                    'value' => $cashback_amount . " " . $aps_payment_response['currency']
+                );
+            }
+            if (! empty($downpayment_amount)) {
+                $display_data['display_data'][] = array(
+                    'label' => $objAps->l('Downpayment'),
+                    'value' => $downpayment_amount . " " . $aps_payment_response['currency']
+                );
+            }
+            if (! empty($loan_number)) {
+                $display_data['display_data'][] = array(
+                    'label' => $objAps->l('Loan Number'),
+                    'value' => $loan_number
+                );
+            }
+
         }
         return $display_data;
     }

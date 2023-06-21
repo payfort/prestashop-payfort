@@ -44,7 +44,7 @@ class Amazonpaymentservices extends PaymentModule
     {
         $this->name = 'amazonpaymentservices';
         $this->tab = 'payments_gateways';
-        $this->version = '2.0.0';
+        $this->version = '2.1.0';
         $this->author = 'Amazon Payment Services';
         $this->need_instance = 1;
         $this->currencies = true;
@@ -844,7 +844,10 @@ class Amazonpaymentservices extends PaymentModule
         
         $title     = $this->l('Buy Now, Pay Monthly');
         $logo_path = Media::getMediaPath(_PS_MODULE_DIR_.$this->name.'/views/img/valu-logo.png');
-        $valu_html = $this->apsValuForm(ApsConstant::APS_PAYMENT_METHOD_VALU, 'redirection', $title, $logo_path);
+        $aps_config = AmazonpaymentservicesConfig::getInstance();
+        $allow_downpayment = $aps_config->isValuDownpaymentEnabled();
+        $downpayment_value = $aps_config->getValuDownpaymentvalue();
+        $valu_html = $this->apsValuForm(ApsConstant::APS_PAYMENT_METHOD_VALU, 'redirection', $title, $logo_path, $allow_downpayment, $downpayment_value);
         if (version_compare(_PS_VERSION_, '1.7', '>=')) {
             $valu_option = new \PrestaShop\PrestaShop\Core\Payment\PaymentOption();
             $valu_option->setCallToActionText($title);
@@ -967,7 +970,7 @@ class Amazonpaymentservices extends PaymentModule
         }
     }
 
-    protected function apsValuForm($payment_method, $integration_type, $payment_title = '', $logo_path = null)
+    protected function apsValuForm($payment_method, $integration_type, $payment_title = '', $logo_path = null, $allow_downpayment, $downpayment_value = 0)
     {
         $this->smarty->assign([
             'payment_title'    => $payment_title,
@@ -988,6 +991,8 @@ class Amazonpaymentservices extends PaymentModule
                 array(),
                 true
             ),
+            'allow_downpayment' => $allow_downpayment,
+            'downpayment_value' => $downpayment_value
         ]);
         if (version_compare(_PS_VERSION_, '1.7', '>')) {
             return $this->fetch('module:amazonpaymentservices/views/templates/hook/payment_form_valu.tpl');

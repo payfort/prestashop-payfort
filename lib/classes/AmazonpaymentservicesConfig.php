@@ -43,6 +43,8 @@ class AmazonpaymentservicesConfig extends AmazonpaymentservicesSuper
     private $knet_status;
     private $knet_sort_order;
     private $valu_status;
+    private $valu_allow_downpayment;
+    private $valu_downpayment_value;
     private $valu_order_min_value;
     private $valu_sort_order;
     private $apple_pay_status;
@@ -106,6 +108,8 @@ class AmazonpaymentservicesConfig extends AmazonpaymentservicesSuper
         'knet_status' => 'AMAZONPAYMENTSERVICES_KNET_STATUS',
         'knet_sort_order' => 'AMAZONPAYMENTSERVICES_KNET_SORT_ORDER',
         'valu_status' => 'AMAZONPAYMENTSERVICES_VALU_STATUS',
+        'valu_allow_downpayment' => 'AMAZONPAYMENTSERVICES_VALU_ALLOW_DOWNPAYMENT',
+        'valu_downpayment_value' => 'AMAZONPAYMENTSERVICES_VALU_DOWNPAYMENT_VALUE',
         'valu_order_min_value' => 'AMAZONPAYMENTSERVICES_VALU_ORDER_MIN_VALUE',
         'valu_sort_order' => 'AMAZONPAYMENTSERVICES_VALU_SORT_ORDER',
         'apple_pay_status' => 'AMAZONPAYMENTSERVICES_APPLE_PAY_STATUS',
@@ -373,6 +377,15 @@ class AmazonpaymentservicesConfig extends AmazonpaymentservicesSuper
         return $this->valu_status;
     }
 
+    public function getValuAllowDownpayment()
+    {
+        return $this->valu_allow_downpayment;
+    }
+
+    public function getValuDownpaymentvalue()
+    {
+        return $this->valu_downpayment_value;
+    }
     public function getValuOrderMinValue()
     {
         return $this->valu_order_min_value;
@@ -578,6 +591,14 @@ class AmazonpaymentservicesConfig extends AmazonpaymentservicesSuper
     public function isValuActive()
     {
         if ($this->valu_status) {
+            return true;
+        }
+        return false;
+    }
+
+    public function isValuDownpaymentEnabled()
+    {
+        if ($this->valu_allow_downpayment) {
             return true;
         }
         return false;

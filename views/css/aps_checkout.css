@@ -93,7 +93,6 @@ body.lang_ar .aps16 .button-align {
     padding: unset;
     margin: unset;
 }
-}
 
 input.field-error {
     border: 2px solid red !important;
@@ -401,7 +400,22 @@ body.lang-rtl .slick-slide
 div.valu_form {
     overflow: hidden;
 }
+.valu_form .valu-amount{
+    margin: 15px 0px;
+}
 
+.valu_form .valu-amount input{
+    margin-top: 10px;
+    width: 200px;
+}
+.valu_form #aps_valu_otp_field .install-line {
+    margin: 20px 0px;
+}
+.valu_form #aps_valu_otp_field .termRow{
+    display: flex;
+    align-items: end;
+    margin: 20px 0px;
+}
 .tenure_carousel .tenureBox {
     text-align: center;
     border: 1px solid #ccc;
@@ -476,6 +490,9 @@ div.valu_form {
     background-color: #f5f5f5;
     border-color: #c7c1c6;
     border-top-color: #bbb3b9;
+}
+.valu_process_error {
+    margin-top: 7px;
 }
 /*Valu css end*/
 
